@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Tunneling Explorer</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+
+    <!-- CSS kita -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- STARFIELD -->
+    <canvas id="stars"></canvas>
+    <!-- NAVIGASI -->
+    <nav id="navbar">
+        <span class="nav-logo">⚛ QT-EXPLORER</span>
+        <div class="nav-links">
+            <a href="#hero">Home</a>
+            <a href="#simulator">Simulator</a>
+            <a href="#minigame">Mini Game</a>
+            <a href="#kuis">Kuis</a>
+        </div>
+    </nav>
+
+    <!-- SECTION 1: HERO -->
+    <section id="hero">
+        <h1>Bisakah elektron <span>menembus tembok?</span></h1>
+        <p>Dalam dunia kuantum, partikel bisa menembus penghalang meski energinya tidak cukup. Eksplorasi sendiri bagaimana caranya!</p>
+        <button onclick="document.getElementById('simulator').scrollIntoView({behavior:'smooth'})">
+            Mulai Eksplorasi →
+        </button>
+    </section>
+
+    <!-- SECTION 2: SIMULATOR -->
+    <section id="simulator">
+        <h2>Simulator Interaktif</h2>
+        <p>Geser slider dan amati perubahan grafik secara real-time</p>
+        <!-- Konten simulator akan diisi di langkah berikutnya -->
+    </section>
+
+    <!-- SECTION 3: MINI GAME -->
+    <section id="minigame">
+        <h2>Mini Game</h2>
+        <p>Bantu kucing menembus penghalang!</p>
+        <!-- Konten mini game akan diisi nanti -->
+    </section>
+
+    <!-- SECTION 4: KUIS -->
+    <section id="kuis">
+        <h2>Mini Kuis</h2>
+        <p>Uji pemahamanmu tentang quantum tunneling</p>
+        <!-- Konten kuis akan diisi nanti -->
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>⚛ Yesa Cantiq </p>
+    </footer>
+
+    <!-- JS kita -->
+    <script src="physics.js"></script>
+
+</body>
+
+</html>
