@@ -235,6 +235,8 @@ section {
   line-height: 1.7;
   max-width: 540px;
   margin-bottom: 2.5rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Tombol EXPLORE */
