@@ -1,71 +1,200 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Tunneling Explorer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Tunneling Adventure</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
 
-    <!-- Plotly.js -->
-    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+  <!-- Google Fonts: Cinzel (judul) + Poppins (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap"
+    rel="stylesheet"
+  />
 
-    <!-- CSS kita -->
-    <link rel="stylesheet" href="style.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- STARFIELD -->
-    <canvas id="stars"></canvas>
-    <!-- NAVIGASI -->
-    <nav id="navbar">
-        <span class="nav-logo">⚛ QT-EXPLORER</span>
-        <div class="nav-links">
-            <a href="#hero">Home</a>
-            <a href="#simulator">Simulator</a>
-            <a href="#minigame">Mini Game</a>
-            <a href="#kuis">Kuis</a>
+
+  <!-- ─────────────────────────────────────────
+       BINTANG BACKGROUND (section 2 ke bawah)
+  ───────────────────────────────────────── -->
+  <canvas id="bg-stars"></canvas>
+
+  <!-- ─────────────────────────────────────────
+       NAVIGASI
+  ───────────────────────────────────────── -->
+  <nav id="navbar">
+    <span class="nav-logo">Quantum Tunneling</span>
+    <div class="nav-links">
+      <a href="#hero"      class="active">Beranda</a>
+      <a href="#konsep"            >Konsep</a>
+      <a href="#minigame"          >Mini Game</a>
+      <a href="#simulator"         >Simulator</a>
+      <a href="#quiz"              >Mini Kuis</a>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════
+       SECTION 1 — HERO
+  ═══════════════════════════════════════ -->
+  <section id="hero">
+
+    <!-- Overlay gradasi gelap ke bawah -->
+    <div class="hero-overlay"></div>
+
+    <!-- Konten teks & tombol -->
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Quantum<br />
+        <span class="hero-title-accent">Tunneling</span>
+      </h1>
+      <p class="hero-sub">
+        Ikuti petualangan kucing sihir menembus penghalang yang mustahil. Jelajahi fisika kuantum dengan cara yang menyenangkan!
+      </p>
+      <button
+        class="btn-explore"
+        onclick="document.getElementById('konsep').scrollIntoView({behavior:'smooth'})"
+      >
+        EXPLORE
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SECTION 2 — KONSEP
+  ═══════════════════════════════════════ -->
+  <section id="konsep">
+    <div class="section-inner">
+
+      <!-- ── Bagian 1: Apa itu Quantum Tunneling ── -->
+      <div class="sec-badge">Konsep Dasar</div>
+      <h2 class="sec-title">Apa sih Quantum Tunneling itu?</h2>
+      <p class="sec-sub">Sebelum kita bermain, kenalan dulu sama fenomenanya yuk!</p>
+
+      <div class="crystal-card">
+        <p class="card-text">
+          Quantum tunneling merupakan fenomena dalam fisika kuantum di mana partikel dapat
+          menembus suatu penghalang energi meskipun energinya tidak mencukupi. Dalam fisika
+          klasik, hal ini tidak mungkin terjadi karena partikel akan dipantulkan jika
+          energinya lebih kecil dari tinggi penghalang. Namun, pada skala kuantum, partikel
+          juga memiliki <strong>sifat gelombang</strong> sehingga posisinya dinyatakan dalam
+          bentuk peluang. Ketika partikel mendekati penghalang, peluang tersebut tidak langsung
+          hilang, melainkan dapat menyebar hingga ke sisi lain. Akibatnya, terdapat kemungkinan
+          partikel muncul di balik penghalang. Fenomena inilah yang dikenal sebagai
+          <strong>quantum tunneling</strong>.
+        </p>
+      </div>
+
+      <!-- ── Bagian 2: Klasik vs Kuantum ── -->
+      <div class="sec-badge" style="margin-top:3rem;">Perbedaan</div>
+      <h2 class="sec-title">Dunia Klasik vs Dunia Kuantum</h2>
+
+      <div class="vs-grid">
+
+        <div class="vs-card vs-klasik">
+          <p class="vs-label">Dunia Klasik</p>
+          <div class="vs-scene">
+            <canvas id="canvas-klasik"></canvas>
+          </div>
+          <p class="vs-text">
+            Di dunia klasik suatu penghalang hanya dapat dilewati jika tersedia energi yang
+            cukup atau terdapat jalur yang jelas, seperti pintu atau celah. Tanpa itu, objek
+            akan tetap terhalang dan tidak dapat berpindah ke sisi lain.
+          </p>
         </div>
-    </nav>
 
-    <!-- SECTION 1: HERO -->
-    <section id="hero">
-        <h1>Bisakah elektron <span>menembus tembok?</span></h1>
-        <p>Dalam dunia kuantum, partikel bisa menembus penghalang meski energinya tidak cukup. Eksplorasi sendiri bagaimana caranya!</p>
-        <button onclick="document.getElementById('simulator').scrollIntoView({behavior:'smooth'})">
-            Mulai Eksplorasi →
+        <div class="vs-card vs-kuantum">
+          <p class="vs-label">Dunia Kuantum</p>
+          <div class="vs-scene">
+            <canvas id="canvas-kuantum"></canvas>
+          </div>
+          <p class="vs-text">
+            Sebaliknya, di dunia kuantum penghalang tidak selalu menjadi batas yang mutlak.
+            Partikel memiliki sifat probabilistik yang memungkinkannya berada di berbagai
+            posisi, sehingga ada kemungkinan muncul di sisi lain meskipun tidak ada jalur
+            yang terlihat.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- ── CTA ke Mini Game ── -->
+      <div class="sec-cta">
+        <button
+          class="btn-primary"
+          onclick="document.getElementById('minigame').scrollIntoView({behavior:'smooth'})"
+        >
+          Mini Games
         </button>
-    </section>
+      </div>
 
-    <!-- SECTION 2: SIMULATOR -->
-    <section id="simulator">
-        <h2>Simulator Interaktif</h2>
-        <p>Geser slider dan amati perubahan grafik secara real-time</p>
-        <!-- Konten simulator akan diisi di langkah berikutnya -->
-    </section>
+    </div>
+  </section>
 
-    <!-- SECTION 3: MINI GAME -->
-    <section id="minigame">
-        <h2>Mini Game</h2>
-        <p>Bantu kucing menembus penghalang!</p>
-        <!-- Konten mini game akan diisi nanti -->
-    </section>
 
-    <!-- SECTION 4: KUIS -->
-    <section id="kuis">
-        <h2>Mini Kuis</h2>
-        <p>Uji pemahamanmu tentang quantum tunneling</p>
-        <!-- Konten kuis akan diisi nanti -->
-    </section>
+  <!-- ═══════════════════════════════════════
+       SECTION 3 — MINI GAME  (minggu 1: judul saja)
+  ═══════════════════════════════════════ -->
+  <section id="minigame" class="stub-section">
+    <div class="section-inner stub-inner">
+      <div class="sec-badge" style="--badge-color:#a78bfa;--badge-bg:rgba(107,33,200,0.08);--badge-border:rgba(167,139,250,0.35);">
+        Mini Game
+      </div>
+      <h2 class="sec-title" style="--title-from:#a78bfa;--title-to:#ff6b9d;">
+        Bantu Kucing Tembus Portal!
+      </h2>
+      <p class="stub-label">— Akan hadir minggu depan —</p>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>⚛ Yesa Cantiq </p>
-    </footer>
 
-    <!-- JS kita -->
-    <script src="physics.js"></script>
+  <!-- ═══════════════════════════════════════
+       SECTION 4 — SIMULATOR  (minggu 1: judul saja)
+  ═══════════════════════════════════════ -->
+  <section id="simulator" class="stub-section">
+    <div class="section-inner stub-inner">
+      <div class="sec-badge">Simulator</div>
+      <h2 class="sec-title">Grafik Fungsi Gelombang</h2>
+      <p class="stub-label">— Akan hadir minggu depan —</p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SECTION 5 — MINI KUIS  (minggu 1: judul saja)
+  ═══════════════════════════════════════ -->
+  <section id="quiz" class="stub-section">
+    <div class="section-inner stub-inner">
+      <div class="sec-badge" style="--badge-color:#f0c060;--badge-bg:rgba(240,192,96,0.06);--badge-border:rgba(240,192,96,0.35);">
+        Mini Kuis
+      </div>
+      <h2 class="sec-title" style="--title-from:#f0c060;--title-to:#ff6b9d;">
+        Uji Pemahamanmu!
+      </h2>
+      <p class="stub-label">— Akan hadir minggu depan —</p>
+    </div>
+  </section>
+
+
+  <!-- ─────────────────────────────────────────
+       FOOTER
+  ───────────────────────────────────────── -->
+  <footer>
+    <p>⚛ Quantum Tunneling Adventure &nbsp;·&nbsp; Fisika Kuantum &nbsp;·&nbsp; Universitas Negeri Yogyakarta 2025</p>
+  </footer>
+
+
+  <!-- JS -->
+  <script src="physics.js"></script>
 
 </body>
-
 </html>
