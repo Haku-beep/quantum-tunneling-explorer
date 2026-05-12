@@ -21,14 +21,9 @@
 </head>
 <body>
 
-  <!-- ─────────────────────────────────────────
-       BINTANG BACKGROUND (section 2 ke bawah)
-  ───────────────────────────────────────── -->
   <canvas id="bg-stars"></canvas>
 
-  <!-- ─────────────────────────────────────────
-       NAVIGASI
-  ───────────────────────────────────────── -->
+  <!--  NAVIGASI -->
   <nav id="navbar">
     <span class="nav-logo">Quantum Tunneling</span>
     <div class="nav-links">
@@ -41,22 +36,18 @@
   </nav>
 
 
-  <!-- ═══════════════════════════════════════
-       SECTION 1 — HERO
-  ═══════════════════════════════════════ -->
+  <!-- SECTION 1 — HERO -->
   <section id="hero">
 
-    <!-- Overlay gradasi gelap ke bawah -->
     <div class="hero-overlay"></div>
 
-    <!-- Konten teks & tombol -->
     <div class="hero-content">
       <h1 class="hero-title">
         Quantum<br />
         <span class="hero-title-accent">Tunneling</span>
       </h1>
       <p class="hero-sub">
-        Ikuti petualangan kucing sihir menembus penghalang yang mustahil. <br>
+        Ikuti petualangan kucing sihir menembus penghalang yang mustahil.
         Jelajahi fisika kuantum dengan cara yang menyenangkan!
       </p>
       <button
@@ -70,13 +61,10 @@
   </section>
 
 
-  <!-- ═══════════════════════════════════════
-       SECTION 2 — KONSEP
-  ═══════════════════════════════════════ -->
+  <!--SECTION 2 — KONSEP-->
   <section id="konsep">
     <div class="section-inner">
 
-      <!-- ── Bagian 1: Apa itu Quantum Tunneling ── -->
       <div class="sec-badge">Konsep Dasar</div>
       <h2 class="sec-title">Apa sih Quantum Tunneling itu?</h2>
       <p class="sec-sub">Sebelum kita bermain, kenalan dulu sama fenomenanya yuk!</p>
@@ -95,7 +83,6 @@
         </p>
       </div>
 
-      <!-- ── Bagian 2: Klasik vs Kuantum ── -->
       <div class="sec-badge" style="margin-top:3rem;">Perbedaan</div>
       <h2 class="sec-title">Dunia Klasik vs Dunia Kuantum</h2>
 
@@ -128,7 +115,6 @@
 
       </div>
 
-      <!-- ── CTA ke Mini Game ── -->
       <div class="sec-cta">
         <button
           class="btn-primary"
@@ -142,9 +128,7 @@
   </section>
 
 
-  <!-- ═══════════════════════════════════════
-       SECTION 3 — MINI GAME  (minggu 1: judul saja)
-  ═══════════════════════════════════════ -->
+  <!-- SECTION 3 — MINI GAME -->
   <section id="minigame" class="stub-section">
     <div class="section-inner stub-inner">
       <div class="sec-badge" style="--badge-color:#a78bfa;--badge-bg:rgba(107,33,200,0.08);--badge-border:rgba(167,139,250,0.35);">
@@ -158,21 +142,135 @@
   </section>
 
 
-  <!-- ═══════════════════════════════════════
-       SECTION 4 — SIMULATOR  (minggu 1: judul saja)
-  ═══════════════════════════════════════ -->
-  <section id="simulator" class="stub-section">
-    <div class="section-inner stub-inner">
+   <!-- ═══════════════════════════
+       SECTION 4 — SIMULATOR
+       MINGGU 2: Plotly + slider real-time
+  ═══════════════════════════ -->
+  <section id="simulator">
+    <div class="section-inner sim-inner">
+ 
+      <!-- Header section -->
       <div class="sec-badge">Simulator</div>
       <h2 class="sec-title">Grafik Fungsi Gelombang</h2>
-      <p class="stub-label">— Akan hadir minggu depan —</p>
+      <p class="sec-sub">
+        Geser slider dan amati perubahan ψ(x), |ψ(x)|², serta T vs L secara real-time
+      </p>
+ 
+      <!-- Layout dua kolom -->
+      <div class="sim-layout">
+ 
+        <!-- ── Kolom kiri: Kontrol parameter ── -->
+        <div class="sim-ctrl">
+ 
+          <p class="ctrl-label-top">// Parameter Kontrol</p>
+ 
+          <!-- Slider Energi E -->
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Energi partikel <em>E</em></span>
+              <span class="slider-val" id="lbl-E">0.30 eV</span>
+            </div>
+            <input type="range" id="sl-E"
+              min="0.05" max="0.95" step="0.01" value="0.30"
+              oninput="updateSimulator()" />
+          </div>
+ 
+          <!-- Slider Tinggi barrier V0 -->
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Tinggi barrier <em>V₀</em></span>
+              <span class="slider-val" id="lbl-V0">1.00 eV</span>
+            </div>
+            <input type="range" id="sl-V0"
+              min="0.5" max="3" step="0.05" value="1.0"
+              oninput="updateSimulator()" />
+          </div>
+ 
+          <!-- Slider Lebar barrier L -->
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Lebar barrier <em>L</em></span>
+              <span class="slider-val" id="lbl-L">3.0 Å</span>
+            </div>
+            <input type="range" id="sl-L"
+              min="0.5" max="10" step="0.1" value="3.0"
+              oninput="updateSimulator()" />
+          </div>
+ 
+          <hr class="sim-divider" />
+ 
+          <!-- Output perhitungan -->
+          <div class="sim-results">
+            <div class="result-row">
+              <span class="result-name">Transmisi T</span>
+              <span class="result-val val-T" id="val-T">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name">Refleksi R</span>
+              <span class="result-val val-R" id="val-R">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-name">κ (peluruhan)</span>
+              <span class="result-val val-K" id="val-K">—</span>
+            </div>
+            <!-- Bar peluang transmisi -->
+            <div class="prob-bar-wrap">
+              <div class="prob-bar-track">
+                <div class="prob-bar-fill" id="prob-bar"></div>
+              </div>
+            </div>
+          </div>
+ 
+          <!-- Chip analisis otomatis -->
+          <div class="sim-chip" id="sim-chip">
+            Geser slider untuk melihat analisis fisika...
+          </div>
+ 
+        </div><!-- /sim-ctrl -->
+ 
+        <!-- ── Kolom kanan: Grafik Plotly ── -->
+        <div class="sim-plots">
+ 
+          <!-- Tab pilih grafik -->
+          <div class="plot-tabs">
+            <button class="plot-tab active" onclick="switchTab('psi',   this)">ψ(x)</button>
+            <button class="plot-tab"        onclick="switchTab('psi2',  this)">|ψ(x)|²</button>
+            <button class="plot-tab"        onclick="switchTab('both',  this)">Keduanya</button>
+            <button class="plot-tab"        onclick="switchTab('tvsl',  this)">T vs L</button>
+          </div>
+ 
+          <!-- Plotly render di sini -->
+          <div id="plot-area"></div>
+ 
+          <!-- Keterangan titik-titik T vs L -->
+          <div class="tvsl-note" id="tvsl-note">
+            <span class="tvsl-dot" style="background:#f0c060;"></span> L₁ = 2 Å
+            &nbsp;&nbsp;
+            <span class="tvsl-dot" style="background:#ff6b9d;"></span> L₂ = 5 Å
+            &nbsp;&nbsp;
+            <span class="tvsl-dot" style="background:#a78bfa;"></span> L₃ = 8 Å
+            &nbsp;&nbsp;&mdash;&nbsp; tiga nilai L berbeda yang di-highlight
+          </div>
+ 
+        </div><!-- /sim-plots -->
+ 
+      </div><!-- /sim-layout -->
+ 
+      <!-- CTA ke Quiz -->
+      <div class="sec-cta" style="margin-top:3rem;">
+        <button
+          class="btn-primary"
+          onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})"
+        >
+          Uji Pemahamanmu →
+        </button>
+      </div>
+ 
     </div>
   </section>
 
 
-  <!-- ═══════════════════════════════════════
-       SECTION 5 — MINI KUIS  (minggu 1: judul saja)
-  ═══════════════════════════════════════ -->
+  <!-- SECTION 5 — MINI KUIS  -->
   <section id="quiz" class="stub-section">
     <div class="section-inner stub-inner">
       <div class="sec-badge" style="--badge-color:#f0c060;--badge-bg:rgba(240,192,96,0.06);--badge-border:rgba(240,192,96,0.35);">
@@ -186,9 +284,7 @@
   </section>
 
 
-  <!-- ─────────────────────────────────────────
-       FOOTER
-  ───────────────────────────────────────── -->
+  <!-- FOOTER -->
   <footer>
     <p>Made with love &nbsp;·&nbsp; Andini, Syifa dan Yesa yang cantiq</p>
   </footer>
