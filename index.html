@@ -36,7 +36,7 @@
   </nav>
 
 
-  <!-- SECTION 1 — HERO -->
+  <!-- SECTION 1 : HERO -->
   <section id="hero">
 
     <div class="hero-overlay"></div>
@@ -61,7 +61,7 @@
   </section>
 
 
-  <!--SECTION 2 — KONSEP-->
+  <!--SECTION 2 : KONSEP-->
   <section id="konsep">
     <div class="section-inner">
 
@@ -128,7 +128,7 @@
   </section>
 
 
-  <!-- SECTION 3 — MINI GAME -->
+  <!-- SECTION 3 : MINI GAME -->
   <section id="minigame" class="stub-section">
     <div class="section-inner stub-inner">
       <div class="sec-badge" style="--badge-color:#a78bfa;--badge-bg:rgba(107,33,200,0.08);--badge-border:rgba(167,139,250,0.35);">
@@ -142,26 +142,18 @@
   </section>
 
 
-   <!-- ═══════════════════════════
-       SECTION 4 — SIMULATOR
-       MINGGU 2: Plotly + slider real-time
-  ═══════════════════════════ -->
+  <!-- SECTION 4 : Simulator -->
   <section id="simulator">
     <div class="section-inner sim-inner">
  
-      <!-- Header section -->
       <div class="sec-badge">Simulator</div>
       <h2 class="sec-title">Grafik Fungsi Gelombang</h2>
       <p class="sec-sub">
         Geser slider dan amati perubahan ψ(x), |ψ(x)|², serta T vs L secara real-time
       </p>
  
-      <!-- Layout dua kolom -->
       <div class="sim-layout">
- 
-        <!-- ── Kolom kiri: Kontrol parameter ── -->
         <div class="sim-ctrl">
- 
           <p class="ctrl-label-top">// Parameter Kontrol</p>
  
           <!-- Slider Energi E -->
@@ -213,7 +205,7 @@
               <span class="result-name">κ (peluruhan)</span>
               <span class="result-val val-K" id="val-K">—</span>
             </div>
-            <!-- Bar peluang transmisi -->
+
             <div class="prob-bar-wrap">
               <div class="prob-bar-track">
                 <div class="prob-bar-fill" id="prob-bar"></div>
@@ -221,17 +213,15 @@
             </div>
           </div>
  
-          <!-- Chip analisis otomatis -->
           <div class="sim-chip" id="sim-chip">
             Geser slider untuk melihat analisis fisika...
           </div>
  
-        </div><!-- /sim-ctrl -->
+        </div>
  
-        <!-- ── Kolom kanan: Grafik Plotly ── -->
+        <!-- Grafik Plotly ── -->
         <div class="sim-plots">
  
-          <!-- Tab pilih grafik -->
           <div class="plot-tabs">
             <button class="plot-tab active" onclick="switchTab('psi',   this)">ψ(x)</button>
             <button class="plot-tab"        onclick="switchTab('psi2',  this)">|ψ(x)|²</button>
@@ -239,10 +229,9 @@
             <button class="plot-tab"        onclick="switchTab('tvsl',  this)">T vs L</button>
           </div>
  
-          <!-- Plotly render di sini -->
           <div id="plot-area"></div>
  
-          <!-- Keterangan titik-titik T vs L -->
+          <!-- Keterangan dot T vs L -->
           <div class="tvsl-note" id="tvsl-note">
             <span class="tvsl-dot" style="background:#f0c060;"></span> L₁ = 2 Å
             &nbsp;&nbsp;
@@ -252,17 +241,17 @@
             &nbsp;&nbsp;&mdash;&nbsp; tiga nilai L berbeda yang di-highlight
           </div>
  
-        </div><!-- /sim-plots -->
+        </div>
  
-      </div><!-- /sim-layout -->
+      </div><
  
-      <!-- CTA ke Quiz -->
+      <!-- CTA ke Mini Quizzz -->
       <div class="sec-cta" style="margin-top:3rem;">
         <button
           class="btn-primary"
           onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})"
         >
-          Uji Pemahamanmu →
+          Uji Pemahamanmu Boss→
         </button>
       </div>
  
@@ -270,7 +259,7 @@
   </section>
 
 
-  <!-- SECTION 5 — MINI KUIS  -->
+  <!-- SECTION 5 : MINI KUIZZZ  -->
   <section id="quiz" class="stub-section">
     <div class="section-inner stub-inner">
       <div class="sec-badge" style="--badge-color:#f0c060;--badge-bg:rgba(240,192,96,0.06);--badge-border:rgba(240,192,96,0.35);">
