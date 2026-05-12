@@ -1,20 +1,12 @@
-/* ═══════════════════════════════════════════════
-   QUANTUM TUNNELING ADVENTURE — physics.js
-   Minggu 2: tambah simulator Plotly real-time
-   ─────────────────────────────────────────────
-   Isi file:
+/* Js isinya:
    1.  Animasi bintang background (seluruh halaman)
    2.  Animasi analogi Klasik vs Kuantum
    3.  Model matematis quantum tunneling
-   4.  Simulator Plotly — grafik real-time
-   5.  Nav scroll highlight
-═══════════════════════════════════════════════ */
+   4.  Simulator Plotly - grafik real-time
+   5.  Nav scroll biar semoothh */
 
 
-/* ─────────────────────────────────────────
-   1. ANIMASI BINTANG BACKGROUND
-   Canvas #bg-stars — fixed, seluruh halaman
-───────────────────────────────────────── */
+/* Bg Bintang animasinya */
 (function initBgStars() {
   const canvas = document.getElementById('bg-stars');
   if (!canvas) return;
@@ -28,7 +20,6 @@
   resize();
   window.addEventListener('resize', resize);
 
-  /* 150 bintang dengan kedip berbeda-beda */
   const stars = Array.from({ length: 150 }, () => ({
     x:     Math.random() * window.innerWidth,
     y:     Math.random() * window.innerHeight,
@@ -57,10 +48,7 @@
 })();
 
 
-/* ─────────────────────────────────────────
-   2a. ANIMASI ANALOGI — DUNIA KLASIK
-   Bola memantul, tidak bisa menembus dinding
-───────────────────────────────────────── */
+/* Animasi Analogi bagian qlasiq */
 (function initKlasik() {
   const canvas = document.getElementById('canvas-klasik');
   if (!canvas) return;
@@ -79,7 +67,6 @@
 
     ctx.clearRect(0, 0, W, H);
 
-    /* Dinding merah */
     const wallGrad = ctx.createLinearGradient(wallX, 0, wallX + wallW, 0);
     wallGrad.addColorStop(0,   'rgba(255, 107, 157, 0.05)');
     wallGrad.addColorStop(0.5, 'rgba(255, 107, 157, 0.55)');
@@ -94,7 +81,7 @@
     ctx.moveTo(wallX + wallW, 8); ctx.lineTo(wallX + wallW, H - 8);
     ctx.stroke();
 
-    /* Gerak dan pantul bola */
+    /* Gerak & pantul bola */
     ballX += ballVX;
     if (ballX >= wallX - 10 || ballX <= 10) ballVX *= -1;
 
@@ -110,10 +97,7 @@
 })();
 
 
-/* ─────────────────────────────────────────
-   2b. ANIMASI ANALOGI — DUNIA KUANTUM
-   Partikel kadang menembus dinding (tunnel)
-───────────────────────────────────────── */
+/* Animasi analogi bagian kuantum */
 (function initKuantum() {
   const canvas = document.getElementById('canvas-kuantum');
   if (!canvas) return;
@@ -131,8 +115,6 @@
     const wallW = 18;
 
     ctx.clearRect(0, 0, W, H);
-
-    /* Portal teal */
     const portalGrad = ctx.createLinearGradient(wallX, 0, wallX + wallW, 0);
     portalGrad.addColorStop(0,   'rgba(0, 212, 170, 0.04)');
     portalGrad.addColorStop(0.5, 'rgba(0, 212, 170, 0.45)');
@@ -150,21 +132,17 @@
     ctx.stroke();
     ctx.shadowBlur = 0;
 
-    /* Gerak partikel */
+    /* bola gerak */
     particleX += 1.8;
 
-    /* Probabilitas tunnel saat di dalam dinding */
     if (particleX > wallX && particleX < wallX + wallW && !transmitted) {
       if (Math.random() < 0.012) transmitted = true;
     }
 
-    /* Reset setelah keluar layar */
     if (particleX > W + 20) {
       particleX   = -20;
       transmitted = false;
     }
-
-    /* Memudar di dalam dinding jika tidak tunnel */
     let alpha = 1;
     if (particleX > wallX && particleX < wallX + wallW && !transmitted) {
       alpha = 0.2;
@@ -173,7 +151,6 @@
     const color = transmitted
       ? `rgba(0, 212, 170, ${alpha})`
       : `rgba(232, 244, 248, ${alpha})`;
-
     if (transmitted) {
       ctx.shadowColor = 'rgba(0, 212, 170, 0.75)';
       ctx.shadowBlur  = 10;
@@ -192,12 +169,9 @@
 })();
 
 
-/* ─────────────────────────────────────────
-   3. MODEL MATEMATIS QUANTUM TUNNELING
-───────────────────────────────────────── */
+/*MODEL MATEMATIS QUANTUM TUNNELING*/
 
 /**
- * Buat array angka dari `a` ke `b` sebanyak `n` titik inklusif.
  * @param {number} a
  * @param {number} b
  * @param {number} n
@@ -211,10 +185,6 @@ function linspace(a, b, n) {
 }
 
 /**
- * Koefisien peluruhan kappa.
- * Menggambarkan seberapa cepat fungsi gelombang meluruh di dalam barrier.
- * Unit alami: ℏ = 1, m = 1
- *
  * @param {number} E  - energi partikel (eV)
  * @param {number} V0 - tinggi barrier (eV)
  * @returns {number}
@@ -224,8 +194,7 @@ function kappa(E, V0) {
 }
 
 /**
- * Koefisien transmisi T — formula eksak persamaan Schrödinger.
- *
+ * persamaan Schrödinger.
  *   T = [ 1 + V₀² · sinh²(κL) / (4E(V₀−E)) ]⁻¹
  *
  * @param {number} E  - energi partikel
@@ -255,9 +224,9 @@ function reflectionR(E, V0, L) {
 /**
  * Fungsi gelombang ψ(x) di tiga region:
  *
- *   Region I   (x < 0)      : osilasi — gelombang datang + pantul
- *   Region II  (0 ≤ x ≤ L)  : eksponensial — meluruh di dalam barrier
- *   Region III (x > L)      : osilasi — gelombang tertransmisi
+ *   Region I   (x < 0)      : osilasi : gelombang datang + pantul
+ *   Region II  (0 ≤ x ≤ L)  : eksponensial : meluruh di dalam barrier
+ *   Region III (x > L)      : osilasi : gelombang tertransmisi
  *
  * @param {number}   E    - energi partikel
  * @param {number}   V0   - tinggi barrier
@@ -284,14 +253,10 @@ function wavefunction(E, V0, L, xArr) {
 }
 
 
-/* ─────────────────────────────────────────
-   4. SIMULATOR PLOTLY — GRAFIK REAL-TIME
-───────────────────────────────────────── */
+/* GRAFIK REAL-TIME*/
 
-/* Tab yang sedang aktif */
 let activeTab = 'psi';
 
-/* Layout dasar Plotly agar sesuai tema */
 const PLOT_LAYOUT = {
   paper_bgcolor: 'transparent',
   plot_bgcolor:  'rgba(5, 22, 48, 0.7)',
@@ -327,40 +292,30 @@ const PLOT_CONFIG = {
 };
 
 /**
- * Ganti tab grafik yang aktif.
- * Dipanggil dari onclick di HTML.
  *
  * @param {string}      tab - 'psi' | 'psi2' | 'both' | 'tvsl'
- * @param {HTMLElement} btn - tombol yang diklik
+ * @param {HTMLElement} btn
  */
 function switchTab(tab, btn) {
   activeTab = tab;
   document.querySelectorAll('.plot-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-
-  /* Tampilkan atau sembunyikan keterangan T vs L */
   const note = document.getElementById('tvsl-note');
   if (note) note.style.display = tab === 'tvsl' ? 'flex' : 'none';
 
   updateSimulator();
 }
 
-/**
- * Update semua elemen simulator:
- * label slider, nilai T/R/κ, bar probabilitas, chip analisis, dan grafik.
- * Dipanggil setiap kali slider digeser (oninput).
- */
 function updateSimulator() {
   const E  = parseFloat(document.getElementById('sl-E').value);
   const V0 = parseFloat(document.getElementById('sl-V0').value);
   const L  = parseFloat(document.getElementById('sl-L').value);
 
-  /* ── Update label slider ── */
   document.getElementById('lbl-E').textContent  = E.toFixed(2)  + ' eV';
   document.getElementById('lbl-V0').textContent = V0.toFixed(2) + ' eV';
   document.getElementById('lbl-L').textContent  = L.toFixed(1)  + ' Å';
 
-  /* ── Hitung T, R, κ ── */
+  /*  Hitung T, R, κ */
   const T = transmissionT(E, V0, L);
   const R = reflectionR(E, V0, L);
   const k = kappa(E, V0);
@@ -369,30 +324,29 @@ function updateSimulator() {
   document.getElementById('val-R').textContent = (R * 100).toFixed(3) + '%';
   document.getElementById('val-K').textContent = k.toFixed(4);
 
-  /* ── Bar probabilitas transmisi ── */
+  /*Bagian probabilitas transmisi */
   const bar = document.getElementById('prob-bar');
   if (bar) bar.style.width = (T * 100).toFixed(2) + '%';
 
-  /* ── Chip analisis otomatis ── */
   const chip   = document.getElementById('sim-chip');
   let msg      = '';
   let chipColor = 'rgba(0,212,170,0.05)';
   let chipBorder = 'var(--teal)';
 
   if (T < 0.001) {
-    msg        = `⚠️ Peluang sangat kecil (${(T * 100).toExponential(2)}%). Barrier sangat kuat — partikel hampir pasti terpantul. κ = ${k.toFixed(3)}.`;
+    msg        = `Peluang sangat kecil (${(T * 100).toExponential(2)}%). Barrier sangat kuat — partikel hampir pasti terpantul. κ = ${k.toFixed(3)}.`;
     chipColor  = 'rgba(255,107,157,0.06)';
     chipBorder = '#ff6b9d';
   } else if (T < 0.1) {
-    msg        = `🔶 Peluang kecil (${(T * 100).toFixed(3)}%). Fungsi gelombang meluruh cepat di dalam barrier. κ = ${k.toFixed(3)}.`;
+    msg        = `Peluang kecil (${(T * 100).toFixed(3)}%). Fungsi gelombang meluruh cepat di dalam barrier. κ = ${k.toFixed(3)}.`;
     chipColor  = 'rgba(240,192,96,0.05)';
     chipBorder = '#f0c060';
   } else if (T < 0.5) {
-    msg        = `🔵 Peluang sedang (${(T * 100).toFixed(2)}%). Ada kemungkinan nyata partikel menembus. Coba naikkan E atau perkecil L!`;
+    msg        = `Peluang sedang (${(T * 100).toFixed(2)}%). Ada kemungkinan nyata partikel menembus. Coba naikkan E atau perkecil L!`;
     chipColor  = 'rgba(0,212,170,0.05)';
     chipBorder = 'var(--teal)';
   } else {
-    msg        = `✅ Peluang tinggi (${(T * 100).toFixed(2)}%)! Barrier tipis atau E mendekati V₀ — partikel dominan tertransmisi.`;
+    msg        = `Peluang tinggi (${(T * 100).toFixed(2)}%)! Barrier tipis atau E mendekati V₀ — partikel dominan tertransmisi.`;
     chipColor  = 'rgba(123,237,159,0.06)';
     chipBorder = '#7bed9f';
   }
@@ -403,7 +357,7 @@ function updateSimulator() {
     chip.style.borderLeftColor      = chipBorder;
   }
 
-  /* ── Render grafik sesuai tab aktif ── */
+
   if (activeTab === 'tvsl') {
     renderTvsL(E, V0);
   } else {
@@ -430,7 +384,6 @@ function renderWavefunction(E, V0, L, mode) {
   const psi  = wavefunction(E, V0, L, xAll);
   const psi2 = psi.map(v => v * v);
 
-  /* Trace bayangan barrier */
   const traceBarrier = {
     x:         [0, 0, L, L, 0],
     y:         [0, 1.6, 1.6, 0, 0],
@@ -464,7 +417,7 @@ function renderWavefunction(E, V0, L, mode) {
     hovertemplate: 'x = %{x:.2f}<br>|ψ|² = %{y:.4f}<extra></extra>',
   };
 
-  /* Pilih traces berdasarkan mode */
+
   let traces;
   if      (mode === 'psi')  traces = [traceBarrier, tracePsi];
   else if (mode === 'psi2') traces = [traceBarrier, tracePsi2];
@@ -480,11 +433,8 @@ function renderWavefunction(E, V0, L, mode) {
 }
 
 /**
- * Render grafik T vs L dengan tiga nilai L berbeda yang di-highlight.
- * Memenuhi syarat dosen: minimal 3 nilai L, ada grafik, ada penjelasan pola.
- *
- * @param {number} E  - energi partikel saat ini (dari slider)
- * @param {number} V0 - tinggi barrier saat ini (dari slider)
+ * @param {number} E  - 
+ * @param {number} V0 - 
  */
 function renderTvsL(E, V0) {
   /* Kurva T(L) kontinu */
@@ -501,7 +451,6 @@ function renderTvsL(E, V0) {
     hovertemplate: 'L = %{x:.1f} Å<br>T = %{y:.3f}%<extra></extra>',
   };
 
-  /* Tiga nilai L yang di-highlight */
   const L_MARKS = [2, 5, 8];
   const T_MARKS = L_MARKS.map(l => transmissionT(E, V0, l));
   const COLORS  = ['#f0c060', '#ff6b9d', '#a78bfa'];
@@ -535,19 +484,15 @@ function renderTvsL(E, V0) {
   Plotly.react('plot-area', [traceLine, traceDots], layout, PLOT_CONFIG);
 }
 
-/* Jalankan simulator saat halaman pertama dimuat */
 document.addEventListener('DOMContentLoaded', function () {
   updateSimulator();
 
-  /* Sembunyikan keterangan T vs L saat pertama load */
   const note = document.getElementById('tvsl-note');
   if (note) note.style.display = 'none';
 });
 
 
-/* ─────────────────────────────────────────
-   5. NAV SCROLL HIGHLIGHT
-───────────────────────────────────────── */
+/* NAV scroll*/
 (function initNavHighlight() {
   const sectionIds = ['hero', 'konsep', 'minigame', 'simulator', 'quiz'];
 
